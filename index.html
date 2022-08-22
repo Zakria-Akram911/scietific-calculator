@@ -7,6 +7,8 @@
     <title>Scientific Calculator</title>
 
     <link rel="stylesheet" href="style.css" />
+
+    <script src="script.js" async></script>
   </head>
   <body>
     <div class="container">
@@ -28,12 +30,12 @@
             </button>
             <button class="btn" value="(">(</button>
             <button class="btn" value=")">)</button>
-            <button class="btn" onclick="sqRoot()">sqrt</button>
+            <button class="btn">√</button>
           </div>
           <div class="btn-row">
-            <button class="btn" value="Math.sin(">sin</button>
-            <button class="btn" value="Math.cos(">cos</button>
-            <button class="btn" value="Math.tan(">tan</button>
+            <button class="btn">sin</button>
+            <button class="btn">cos</button>
+            <button class="btn">tan</button>
             <button class="btn">^</button>
             <button class="btn">log</button>
           </div>
@@ -41,8 +43,8 @@
             <button class="btn" value="9">9</button>
             <button class="btn" value="8">8</button>
             <button class="btn" value="7">7</button>
-            <button class="btn" value="*">*</button>
-            <button class="btn" value="/">/</button>
+            <button class="btn" value="*">x</button>
+            <button class="btn" value="/">÷</button>
           </div>
           <div class="btn-row">
             <button class="btn" value="6">6</button>
@@ -58,100 +60,16 @@
             <button class="btn" value="0">0</button>
             <button class="btn" onclick="equal()">=</button>
           </div>
+          <div class="btn-row">
+            <button class="btn">e</button>
+            <button class="btn">𝝅</button>
+          </div>
         </div>
       </div>
       <div class="history-main">
-        <button id="history">showhistory</button>
-        <div class="his-show"></div>
+        <button id="history">show history</button>
+        <div class="show-history-main"></div>
       </div>
     </div>
   </body>
 </html>
-
-<script>
-  const displayInput = document.querySelector("#input-screen");
-  const displayOutput = document.querySelector("#output-screen");
-  const btn = document.getElementsByClassName("btn");
-  const history = document.querySelector(".his-show");
-  const historyBtn = document.querySelector("#history");
-  let abc = "";
-  let historyList = [];
-
-  for (item of btn) {
-    item.addEventListener("click", (e) => {
-      btnText = e.target.innerText;
-      if (btnText === "CE" || btnText === "AC" || btnText === "=") {
-        displayInput.value = displayInput.value;
-      } else {
-        if (btnText === "sin" || btnText === "cos" || btnText === "tan") {
-          displayInput.value += btnText + "(";
-        } else {
-          displayInput.value += btnText;
-        }
-        abc += e.target.value;
-      }
-    });
-  }
-
-  // const displayHistory = () => {
-  //   console.log(historyList);
-  //   history.innerHTML =
-  //     "<ul>" +
-  //     historyList
-  //       .map(function (wizard) {
-  //         return "<li>" + wizard + "</li>";
-  //       })
-  //       .join("") +
-  //     "</ul>";
-  // };
-
-  function createInput(value) {
-    let a = document.createElement("input");
-    a.type = "text";
-    a.value = `${value}`;
-  }
-
-  historyBtn.addEventListener("click", () => {
-    console.log(historyList);
-    historyList.map(function (wizard) {
-      let a = document.createElement("input");
-      a.type = "text";
-      a.value = `${wizard}`;
-      a.classList.add("history-input");
-      return history.appendChild(a);
-    });
-    historyList = [];
-  });
-
-  const backspace = () => {
-    displayInput.value = displayInput.value.substr(
-      0,
-      displayInput.value.length - 1
-    );
-    abc = abc.substr(0, abc.length - 1);
-  };
-
-  const sqRoot = () => {
-    displayOutput.value = Math.sqrt(displayInput.value);
-  };
-
-  const equal = () => {
-    syntaxError();
-    displayOutput.value = eval(abc);
-    historyList.push(displayInput.value);
-    displayInput.value = "";
-    abc = "";
-    historyList.push(displayOutput.value);
-  };
-
-  const syntaxError = () => {
-    if (
-      eval(abc) == SyntaxError ||
-      eval(abc) == ReferenceError ||
-      eval(abc) == TypeError
-    ) {
-      displayOutput.value = "Syntax Error";
-      console.log("error");
-    }
-  };
-</script>

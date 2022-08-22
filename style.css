@@ -63,7 +63,7 @@ input.history-input {
   width: 100%;
   height: 30px;
   border: none;
-  margin: 10px 10px;
+  margin: 10px 0px;
   display: block;
   border-radius: 6px;
   padding: 0px 10px;
@@ -76,7 +76,7 @@ input.history-input:nth-child(even) {
 .history-main {
   background: black;
   padding: 20px;
-
+  transition: all 0.4s ease-in-out;
   min-height: 330px;
   max-height: 330px;
   overflow-y: auto;
@@ -89,4 +89,30 @@ input.history-input:nth-child(even) {
   color: white;
   text-transform: capitalize;
   font-weight: 600;
+}
+
+.single-history-entry {
+  border: 1px solid white;
+  padding: 5px 5px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.single-history-entry button {
+  background: red;
+  padding: 3px;
+  border-radius: 50%;
+  font-weight: 100;
+}
+
+.single-history-entry p {
+  color: white;
+}
+
+.single-history-entry input {
+  margin-bottom: 10px;
+  height: 30px;
+  padding: 0px 5px;
 }
