@@ -77,9 +77,10 @@ input.history-input:nth-child(even) {
   background: black;
   padding: 20px;
   transition: all 0.4s ease-in-out;
-  min-height: 330px;
-  max-height: 330px;
+  min-height: 370px;
+  max-height: 370px;
   overflow-y: auto;
+  min-width: 310px;
 }
 
 .history-main button {

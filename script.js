@@ -9,7 +9,7 @@ let historyList = [];
 const cos = Math.cos;
 const sin = Math.sin;
 const tan = Math.tan;
-const π = Math.PI;
+const 𝝅 = Math.PI;
 const sqrt = Math.sqrt;
 const e = Math.E;
 
@@ -34,6 +34,7 @@ for (item of btn) {
         displayInput.value += btnText;
       }
     }
+    console.log(e.target.value);
   });
 }
 
@@ -51,27 +52,27 @@ displayInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
     equal();
   }
+  if (e.key === "Escape") {
+    displayInput.value = "";
+    displayOutput.value = "";
+  }
 });
 
 // For History
-historyBtn.addEventListener("click", () => {
-  history.innerHTML = "";
-  historyList.map(function (wizard) {
-    return (history.innerHTML +=
-      "<div class='single-history-entry'>" +
-      "<div>" +
-      `<input type='text' value= 'Your Input: ${wizard}' />` +
-      "<p>" +
-      " Your Output " +
-      eval(wizard) +
-      "</p>" +
-      "</div>" +
-      "<button onclick='this.parentNode.remove()'> x " +
-      "</button>" +
-      "</div>");
-  });
-  history.classList.toggle("active");
-});
+const displayHistory = () => {
+  return (history.innerHTML +=
+    "<div class='single-history-entry'>" +
+    "<div>" +
+    `<input type='text' value= 'Your Input: ${displayInput.value}' />` +
+    "<p>" +
+    " Your Output " +
+    eval(displayInput.value).toFixed(4) +
+    "</p>" +
+    "</div>" +
+    "<button onclick=' this.parentNode.remove();'> x " +
+    "</button>" +
+    "</div>");
+};
 
 //For deleting characters
 const backspace = () => {
@@ -89,6 +90,7 @@ const equal = () => {
     } else {
       displayOutput.value = eval(displayInput.value).toFixed(4);
       historyList.push(displayInput.value);
+      displayHistory();
       displayInput.value = "";
     }
   } catch (err) {
