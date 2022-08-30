@@ -22,6 +22,7 @@ let variableObject = {};
 for (item of btn) {
   item.addEventListener("click", (e) => {
     btnText = e.target.innerText;
+    displayInput.focus();
     if (btnText === "CE" || btnText === "AC" || btnText === "=") {
       displayInput.value = displayInput.value;
     } else {
@@ -37,6 +38,8 @@ for (item of btn) {
         displayInput.value += "sqrt(";
       } else if (btnText === "^") {
         displayInput.value += "**";
+      } else if (btnText === "(") {
+        displayInput.value += "*(";
       } else {
         displayInput.value += btnText;
       }
@@ -47,14 +50,15 @@ for (item of btn) {
 
 //For typed input
 displayInput.addEventListener("keyup", (e) => {
-  if (e.key === "s") {
-    displayInput.value += "in(";
-  }
-  if (e.key === "c") {
-    displayInput.value += "os(";
-  }
-  if (e.key === "t") {
-    displayInput.value += "an(";
+  if (
+    e.key === "(" &&
+    !displayInput.value.slice(-2).includes("n") &&
+    !displayInput.value.slice(-2).includes("s") &&
+    !displayInput.value.slice(-2).includes("g")
+  ) {
+    console.log(displayInput.value.slice(-2));
+    let newStr = displayInput.value.replace("(", "");
+    displayInput.value = newStr + "*(";
   }
   if (e.key === "Enter") {
     equal();
