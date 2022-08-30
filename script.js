@@ -54,7 +54,8 @@ displayInput.addEventListener("keyup", (e) => {
     e.key === "(" &&
     !displayInput.value.slice(-2).includes("n") &&
     !displayInput.value.slice(-2).includes("s") &&
-    !displayInput.value.slice(-2).includes("g")
+    !displayInput.value.slice(-2).includes("g") &&
+    !displayInput.value.slice(-2).includes("t")
   ) {
     console.log(displayInput.value.slice(-2));
     let newStr = displayInput.value.replace("(", "");
@@ -70,6 +71,9 @@ displayInput.addEventListener("keyup", (e) => {
   if (e.key === "Escape") {
     displayInput.value = "";
     displayOutput.value = "";
+  }
+  if (e.key === "Delete") {
+    backspace();
   }
 });
 
@@ -95,7 +99,11 @@ const backspace = () => {
     displayInput.value.length - 1
   );
 };
-
+// For Error message
+const removeErrorMessage = () => {
+  varDeclaredError.value = "";
+  displayOutput.value = "";
+};
 // For Declaring a variable
 const variableDeclaration = () => {
   // const valueOfVar = varDeclaredInput.value;
@@ -106,7 +114,9 @@ const variableDeclaration = () => {
     Number(valueOfVar[0])
   ) {
     varDeclaredError.value = "Invalid Assigment";
-    varDeclaredInput.value = "";
+    setTimeout(removeErrorMessage, 2000);
+    // setInterval(errorMessage("Invalild Assignment"), 3000);
+    // varDeclaredInput.value = "";
   } else {
     const input = valueOfVar.trim().split("=");
     //destructing the array in key value pair
@@ -114,6 +124,7 @@ const variableDeclaration = () => {
 
     if (variableObject.hasOwnProperty(key)) {
       varDeclaredError.value = "variable already exist";
+      setTimeout(removeErrorMessage, 2000);
       // varDeclaredInput.value = "";
     } else {
       //appending the new key value pair in the object
@@ -135,6 +146,9 @@ const equal = () => {
       displayOutput.value = eval(displayInput.value).toFixed(4);
       displayInput.value = "";
       displayOutput.value = "";
+    } else if (!Number.isFinite(eval(displayInput.value))) {
+      displayOutput.value = "Math Error";
+      setTimeout(removeErrorMessage, 2000);
     } else {
       displayOutput.value = eval(displayInput.value).toFixed(4);
       displayHistory();
@@ -142,5 +156,6 @@ const equal = () => {
     }
   } catch (err) {
     displayOutput.value = err.name;
+    setTimeout(removeErrorMessage, 2000);
   }
 };
